@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Photo Gallery</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+    .gallery-container {
+      background: white;
+      color: #1E3A8A;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      margin: 20px auto;
+      position: relative;
+      transform: translateY(-20% );
+    }
+    .gallery-container h1 {
+      margin-bottom: 20px;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .folder {
+      background: rgba(30, 58, 138, 0.2);
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #1E3A8A;
+      font-size: 18px;
+      width: 150px;
+      text-align: center;
+    }
+    .folder:hover {
+      background: rgba(30, 58, 138, 0.4);
+    }
+    .images {
+      display: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .images img {
+      width: 150px;
+      height: 150px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+    .images img:hover {
+      transform: scale(1.1);
+    }
+    .slideshow {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .slideshow img {
+      width: 70%;
+      max-height: 80%;
+    }
+    .back-btn {
+      background: #60A5FA;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      color: black;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="webpage-container">
+    <div id="upper-header-placeholder"></div>
+    <div id="lower-header-placeholder"></div>
+    <div id="marquee-placeholder"></div>
+    <div style="display: flex;">
+      <div id="sidebar-placeholder" style="border-right: none;"></div>
+      <div class="right-body" style="border-left: none;">
+        <div class="gallery-container">
+          <h1 id="gallery-title">Photo/Video Gallery of Customs Indore</h1>
+          <div class="gallery" id="gallery"></div>
+          <div class="slideshow" id="slideshow" onclick="closeSlideshow()">
+            <img id="slideImage" src="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="footer-placeholder"></div>
+  </div>
+  <script>
+    const folders = {
+      "15th August Celebration": ["images/photo-gallary/15-aug-24/1.JPG","images/photo-gallary/15-aug-24/2.JPG","images/photo-gallary/15-aug-24/3.JPG","images/photo-gallary/15-aug-24/4.JPG","images/photo-gallary/15-aug-24/5.JPG","images/photo-gallary/15-aug-24/6.JPG","images/photo-gallary/15-aug-24/7.JPG"],
+      "26th January Celebration": ["images/photo-gallary/26-jan-25/1.jpg","images/photo-gallary/26-jan-25/2.JPG","images/photo-gallary/26-jan-25/3.JPG","images/photo-gallary/26-jan-25/4.JPG","images/photo-gallary/26-jan-25/5.JPG"],
+      "International Customs Day 2025": ["images/photo-gallary/customs-day-25/1.JPG","images/photo-gallary/customs-day-25/2.JPG","images/photo-gallary/customs-day-25/3.JPG","images/photo-gallary/customs-day-25/4.JPG","images/photo-gallary/customs-day-25/5.JPG","images/photo-gallary/customs-day-25/6.JPG","images/photo-gallary/customs-day-25/7.JPG","images/photo-gallary/customs-day-25/8.JPG","images/photo-gallary/customs-day-25/9.JPG"]
+    };
+
+    const gallery = document.getElementById("gallery");
+    const galleryTitle = document.getElementById("gallery-title");
+    let currentImages = [];
+
+    function loadFolders() {
+      gallery.innerHTML = "";
+      galleryTitle.innerText = "Photo/Video Gallery of Customs Indore";
+      for (let folder in folders) {
+        let folderDiv = document.createElement("div");
+        folderDiv.classList.add("folder");
+        folderDiv.innerText = folder;
+        folderDiv.onclick = () => showImages(folder);
+        gallery.appendChild(folderDiv);
+      }
+    }
+
+    function showImages(folder) {
+      galleryTitle.innerText = `Gallery: ${folder}`;
+      gallery.innerHTML = '<div class="back-btn" onclick="goBack()">Back</div>';
+      let imagesDiv = document.createElement("div");
+      imagesDiv.classList.add("images");
+      imagesDiv.style.display = "flex";
+      
+      folders[folder].forEach(imgSrc => {
+        let img = document.createElement("img");
+        img.src = imgSrc;
+        img.onclick = () => openSlideshow(imgSrc);
+        imagesDiv.appendChild(img);
+      });
+      gallery.appendChild(imagesDiv);
+    }
+
+    function openSlideshow(imgSrc) {
+      document.getElementById("slideshow").style.display = "flex";
+      document.getElementById("slideImage").src = imgSrc;
+    }
+
+    function closeSlideshow() {
+      document.getElementById("slideshow").style.display = "none";
+    }
+
+    function goBack() {
+      loadFolders();
+    }
+
+    document.addEventListener("DOMContentLoaded", loadFolders);
+  </script>
+  <script src="scripts.js"></script>
+  <script>
+    function loadHTML(url, placeholderId, callback) {
+      fetch(url)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById(placeholderId).innerHTML = data;
+          if (callback) callback();
+        })
+        .catch(error => console.error('Error loading HTML:', error));
+    }
+    loadHTML('partials/upperheader.html', 'upper-header-placeholder');
+    loadHTML('partials/lowerheader.html', 'lower-header-placeholder', addDropdownListeners);
+    loadHTML('partials/footer.html', 'footer-placeholder');
+    loadHTML('partials/sidebar.html', 'sidebar-placeholder');
+    loadHTML('partials/marquee.html', 'marquee-placeholder');
+  </script>
+</body>
+</html>

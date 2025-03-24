@@ -1,0 +1,175 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About Us</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        min-height: 100%;
+        background-color: #f4f4f4;
+        margin: 0;
+      }
+      .login-box {
+        background: white;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        text-align: center;
+        width: 400px;
+        margin-top: 20px;
+      }
+      .login-box h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      .form-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .form-group label {
+        flex: 1;
+        text-align: left;
+      }
+      .form-group input {
+        flex: 2;
+        padding: 8px;
+        margin-left: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background: blue;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .register-text {
+        margin-top: 10px;
+        color: blue;
+        cursor: pointer;
+      }
+      .hidden {
+        display: none;
+      }
+      .error {
+        color: red;
+        font-size: 12px;
+        text-align: left;
+      }
+      .webpage-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        flex-grow: 1;
+      }
+      .content-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-grow: 1;
+        width: 100%;
+        padding-top: 20px;
+      }
+      #footer-placeholder {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="webpage-container">
+      <div id="upper-header-placeholder" style="width: 100%;"></div>
+      <div id="lower-header-placeholder" style="width: 100%;"></div>
+      <div id="marquee-placeholder" style="width: 100%;"></div>
+      <div class="content-wrapper">
+        <div id="sidebar-placeholder"></div>
+        <div class="right-body">
+          <div class="login-box">
+            <h2 id="formTitle">Login</h2>
+            <form id="authForm">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Username" required>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Password" required>
+              </div>
+              <div class="form-group hidden" id="extraFields">
+                <label for="mobile">Mobile No.</label>
+                <input type="text" id="mobile" placeholder="Mobile No.">
+              </div>
+              <div class="form-group hidden" id="extraFieldsEmail">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email">
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+            <p class="register-text" onclick="toggleForm()">Don't have an account? Register</p>
+          </div>
+        </div>
+      </div>
+      <div id="footer-placeholder" style="width: 100%;"></div>
+    </div>
+    <script>
+        function loadHTML(url, placeholderId, callback) {
+          fetch(url)
+            .then(response => response.text())
+            .then(data => {
+              document.getElementById(placeholderId).innerHTML = data;
+              if (callback) callback();
+            })
+            .catch(error => console.error('Error loading HTML:', error));
+        }
+        loadHTML('partials/upperheader.html', 'upper-header-placeholder');
+        loadHTML('partials/lowerheader.html', 'lower-header-placeholder', addDropdownListeners);
+        loadHTML('partials/footer.html', 'footer-placeholder');
+        loadHTML('partials/sidebar.html', 'sidebar-placeholder');
+        loadHTML('partials/marquee.html', 'marquee-placeholder');
+      
+        function addDropdownListeners() {
+          const dropdowns = document.querySelectorAll('.dropdown');
+          dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('click', function() {
+              this.classList.toggle('is-active');
+            });
+          });
+        }
+      
+        document.addEventListener("DOMContentLoaded", function() {
+          addDropdownListeners();
+        });
+      </script>
+      <script>
+      let isLogin = true;
+      function toggleForm() {
+        isLogin = !isLogin;
+        document.getElementById('formTitle').innerText = isLogin ? 'Login' : 'Register';
+        document.getElementById('extraFields').classList.toggle('hidden');
+        document.getElementById('extraFieldsEmail').classList.toggle('hidden');
+        document.querySelector('.register-text').innerText = isLogin ? "Don't have an account? Register" : "Already have an account? Login";
+      }
+      document.getElementById('authForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const mobile = document.getElementById('mobile').value;
+        const email = document.getElementById('email').value;
+        if (!isLogin && (mobile.trim() === '' || email.trim() === '')) {
+          alert('Please enter all required fields.');
+          return;
+        }
+        alert(isLogin ? 'Logging in...' : 'After verification, login credentials will be emailed to you. Thank You!');
+      });
+    </script>
+  </body>
+  </html>

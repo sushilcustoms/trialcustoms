@@ -184,6 +184,50 @@
             bottom: 10px;
             width: 100%;
         }
+        .image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    overflow: auto; /* Enable scrolling */
+}
+
+.modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto; /* Allow image to be scrollable */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 90vh; /* Ensure image fits the screen */
+    border-radius: 10px;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+}
         .custom-dot {
             height: 12px;
             width: 12px;
@@ -255,10 +299,7 @@
         gap: 100px;
     }
     .box {
-        width: 50%;
-        /* border: 1px solid #ddd;
-        padding: 10px;
-        border-radius: 5px; */
+        width: 100%;
     }
     .container {
       display: flex;
@@ -290,7 +331,7 @@
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            background-color: lightseagreen;
+            /* background-color: lightseagreen; */
         }
         .gallery-header::after {
             content: "";
@@ -346,18 +387,29 @@
         .next { right: 10px; }
     .notice-board {
         overflow: hidden;
-        height: 100px;
+        height: auto;
+        min-height: 280px;;
         position: relative;
     }
     .notice-board ul {
-        list-style-type: none;
-        padding: 0;
-        position: absolute;
-        animation: scrollUp 5s linear infinite;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    text-align: left; /* Align text to the left */
+    word-wrap: break-word; /* Ensure long words break properly */
+    white-space: normal; /* Allow normal text wrapping */
+    animation: scrollUp 10s linear infinite;
     }
+
+  .notice-board:hover ul {
+    animation-play-state: paused;
+}
     .notice-board li {
-        margin-bottom: 10px;
-        white-space: nowrap;
+        margin-bottom: 8px;
+        padding: 5px 0; 
+        white-space: normal; /* Allow normal text wrapping */
+
     }
     @keyframes scrollUp {
         0% { transform: translateY(100%); }
@@ -467,6 +519,7 @@
                     <div class="gallery-container">
                       <div class="slider-container" onmouseover="pauseSlide()" onmouseout="resumeSlide()">
                         <div class="slides">
+                       
                           <div class="slide"><img src="images/slideshow/1.jpg" alt="Image 1" onclick="enlargeImage(this)"></div>
                           <div class="slide"><img src="images/slideshow/2.JPG" alt="Image 2" onclick="enlargeImage(this)"></div>
                           <div class="slide"><img src="images/slideshow/3.jpg" alt="Image 3" onclick="enlargeImage(this)"></div>
@@ -490,12 +543,23 @@
                 <div class="header">Notice Board</div>
                 <div class="section notice-board">
                   <ul>
-                    <li>Important notice 1... </li>
-                    <li>Important notice 2... </li>
-                    <li>Important notice 3... </li>
-                    <li>Important notice 1... </li>
-                    <li>Important notice 2... </li>
-                    <li>Important notice 3... </li>
+                    <li><a href="documents/establishment-order/4-2024.pdf" target="_blank">Order No. 4-2024 dtd. 12.07.2024 (Superintendent)</a></li>
+                    <li><a href="documents/establishment-order/5-2024.pdf" target="_blank">Order No. 5-2024 dtd. 12.07.2024 (Inspector)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Order No. 6-2024 dtd. 16.08.2024 (Superintendent)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 7-2024 dtd. 16.08.2024 (Asst.Commr)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 9-2024 dtd. 10.09.2024 (EA, TA, Steno)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 10-2024 dtd. 12.09.2024 (Hawaldar) </a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 11-2024 dtd. 25.09.2024 (Superintendent)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 12-2024 dtd. 25.09.2024 (Inspector)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 13-2024 dtd. 08.10.2024 (Insp. & Supdt.)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 15-2024 dtd. 9.10.2024 (Superintendent)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 16-2024 dtd. 9.10.2024 (Inspector)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 17-2024 dtd. 17.10.2024 (APAR Custodian)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 18-2024 dtd. 18.10.2024 (Asst. Commr)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 19-2024 dtd. 4.11.2024 (Asst. Commr.)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 20-2024 dtd.15.01.2025 (Inspector)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 21-2024 dtd. 17.01.2025 (Superintendent)</a></li>
+                    <li><a href="documents/establishment-order/6-2024.pdf" target="_blank">Est. Order No. 22-2024 dtd.22.01.2025 (Superintendent)</a></li>
                   </ul>
                 </div>
               </div>
@@ -567,14 +631,24 @@
       document.querySelector('.custom-slider-container').addEventListener('mouseleave', () => slideInterval = setInterval(autoSlide, 3000));
   
       showSlide(currentIndex);
+
        // Enlarge image on click
-  function enlargeImage(img) {
-      const modal = document.createElement('div');
-      modal.classList.add('image-modal');
-      modal.innerHTML = `<span class="close" onclick="this.parentElement.remove()">&times;</span><img src="${img.src}" class="modal-content">`;
-      document.body.appendChild(modal);
-  }
+  
+function enlargeImage(img) {
+    let modal = document.createElement('div');
+    modal.classList.add('image-modal');
+
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close-modal" onclick="document.body.removeChild(this.parentElement.parentElement)">&times;</span>
+            <img src="${img.src}" alt="Enlarged Image">
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+}
     </script>
+
     <script>
       function openModal(id) {
           document.getElementById(id).style.display = 'block';
